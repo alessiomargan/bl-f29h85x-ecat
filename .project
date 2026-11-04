@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>bl-f29h85x-ecat</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.ti.ccstudio.core.ccsNature</nature>
+		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>driverlib.lib</name>
+			<type>1</type>
+			<locationURI>COM_TI_MCU_SDK_INSTALL_DIR/source/driverlib/ccs/driverlib.lib</locationURI>
+		</link>
+		<link>
+			<name>device/codestartbranch.asm</name>
+			<type>1</type>
+			<locationURI>COM_TI_MCU_SDK_INSTALL_DIR/examples/device_support/source/codestartbranch.asm</locationURI>
+		</link>
+		<link>
+			<name>device/driverlib.h</name>
+			<type>1</type>
+			<locationURI>COM_TI_MCU_SDK_INSTALL_DIR/examples/device_support/include/driverlib.h</locationURI>
+		</link>
+	</linkedResources>
+	<variableList>
+		<variable>
+			<name>ETHERCAT_SOURCE</name>
+			<value>$%7BCOM_TI_MCU_SDK_INSTALL_DIR%7D/source/communication/Ethercat</value>
+		</variable>
+		<variable>
+			<name>EXAMPLE_ROOT</name>
+			<value>$%7BCOM_TI_MCU_SDK_INSTALL_DIR%7D/examples/communication/Ethercat/examples/f29h85x_cpu1_echoback_solution</value>
+		</variable>
+	</variableList>
+</projectDescription>

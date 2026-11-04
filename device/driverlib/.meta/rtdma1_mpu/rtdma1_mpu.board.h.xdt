@@ -1,0 +1,76 @@
+% var nameOfModule = "rtdma1_mpu";
+% let Common   = system.getScript("/driverlib/Common.js");
+//*****************************************************************************
+//
+// RTDMA1 MPU Configurations
+//
+//*****************************************************************************
+% if(Common.isAllocationOff()) {
+% var module = system.modules['/driverlib/' + nameOfModule + '.js'];
+% var contextNames = Common.getContextNames()
+% for (var cntx of contextNames)
+% {
+    % module = Common.getModuleForCore("/driverlib/rtdma1_mpu.js", cntx);
+    % if (module != null) {
+        % for(var i = 0; i < module.$instances.length; i++) {
+            % var instance = module.$instances[i];
+#define `instance.$name` `instance.mpuRegion`
+            % if(!instance.memoryTiedRegion){
+                % if (instance.startAddressInputMode == "MANUAL") {
+#define `instance.$name`_STARTADDRESS 0x`instance.startAddressManual.toString(16)`
+                % } if (instance.endAddressInputMode == "MANUAL") {
+#define `instance.$name`_ENDADDRESS 0x`instance.endAddressManual.toString(16)`
+                % }
+                % if (instance.startAddressInputMode == "VARIABLE") {
+extern const void *`instance.startAddressVariable`;
+                % } if (instance.endAddressInputMode == "VARIABLE") {
+extern const void *`instance.endAddressVariable`;
+                % }
+            % }
+            % else {
+            % let aprName   = instance.$name.replace("_MPU_REGION","")
+            % let aprInst   = Common_Sec.findAPRbyName(aprName)[0]
+            % // console.log(aprInst)
+            % let startAddress  = "0x" + aprInst.startAddr.toString(16)
+            % let endAddress    = "0x" + (aprInst.endAddr - 1).toString(16)
+#define `instance.$name`_STARTADDRESS `startAddress`
+#define `instance.$name`_ENDADDRESS `endAddress`
+            %  }
+        % }
+    % }
+% }
+% }
+% else {
+% let raData = system.resourceAllocation.data
+% for (var cntx of raData.contexts)
+% {
+    % let module = cntx.modules.find(x => x.moduleName === '/driverlib/rtdma1_mpu.js')
+    % if ((module != null) && (module.instances.length != 0)) {
+        % for(var i = 0; i < module.instances.length; i++) {
+            % var instance = module.instances[i];
+#define `instance.allocationName` `instance.requiredArgs.mpuRegion`
+            % if(!instance.requiredArgs.memoryTiedRegion){
+                % if (instance.requiredArgs.startAddressInputMode == "MANUAL") {
+#define `instance.allocationName`_STARTADDRESS 0x`instance.requiredArgs.startAddressManual.toString(16)`
+                % } if (instance.requiredArgs.endAddressInputMode == "MANUAL") {
+#define `instance.allocationName`_ENDADDRESS 0x`instance.requiredArgs.endAddressManual.toString(16)`
+                % }
+                % if (instance.requiredArgs.startAddressInputMode == "VARIABLE") {
+extern const void *`instance.requiredArgs.startAddressVariable`;
+                % } if (instance.requiredArgs.endAddressInputMode == "VARIABLE") {
+extern const void *`instance.requiredArgs.endAddressVariable`;
+                % }
+            % }
+            % else {
+            % let aprName   = instance.allocationName.replace("_MPU_REGION","")
+            % let aprInst   = Common_Sec.findAPRbyName(aprName)[0]
+            % // console.log(aprInst)
+            % let startAddress  = "0x" + aprInst.startAddr.toString(16)
+            % let endAddress    = "0x" + (aprInst.endAddr - 1).toString(16)
+#define `instance.allocationName`_STARTADDRESS `startAddress`
+#define `instance.allocationName`_ENDADDRESS `endAddress`
+            %  }
+        % }
+    % }
+% }
+% }

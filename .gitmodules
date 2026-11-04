@@ -1,0 +1,4 @@
+[submodule "external/soes"]
+	path = external/soes
+	url = https://github.com/alessiomargan/SOES.git
+	branch = f28p65x

@@ -1,0 +1,21 @@
+# ccs configuration build dir
+RAM/
+FLASH/
+LAUNCHXL_FLASH/
+CC_BLDR/
+LP_BLDR/
+
+.settings/
+
+.clangd
+
+.codex/
+
+# This repository intentionally provides a top-level build/flash wrapper.
+!Makefile
+!Makefile.linux_local
+!Makefile.darwin_local
+
+!FAPI_F28P65x_EABI_v3.00.02.lib
+!driverlib.lib
+

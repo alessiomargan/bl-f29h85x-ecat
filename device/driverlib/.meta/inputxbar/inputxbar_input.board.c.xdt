@@ -1,0 +1,70 @@
+% var moduleName = "inputxbar_input"
+% var module = system.modules['/driverlib/' + moduleName + '.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+% var nameOfPeripheral = "INPUTXBAR";
+% var baseAddress = nameOfPeripheral + "_BASE";
+//*****************************************************************************
+//
+// INPUTXBAR Configurations
+//
+//*****************************************************************************
+% if(Common.isContextCPU1()) {
+	% if (Common.isAllocationOff()) {
+void `nameOfPeripheral`_init(){
+	% if(module != null){
+	%   for(var i = 0; i < module.$instances.length; i++) 
+	%   {
+	%      var instance = module.$instances[i];
+	`instance.$name`_init();
+	%   }
+	%   }
+}
+
+	% if(module != null){
+	% for(var i = 0; i < module.$instances.length; i++) {
+		% var instance = module.$instances[i];
+void `instance.$name`_init(){
+	XBAR_setInputPin(`baseAddress`, `instance.$name`_INPUT, `instance.$name`_SOURCE);
+		% if (instance.inputxbarLock){
+	XBAR_lockInput(`baseAddress`, `instance.$name`_INPUT);
+		% }
+}
+		%}
+	%}
+%}
+	% else{
+	% let raData = system.resourceAllocation.data
+void `nameOfPeripheral`_init(){
+	% for (let context of raData.contexts)
+	% {
+	    % module = context.modules.find(x => x.moduleName === '/driverlib/' + moduleName + '.js')
+		% if (module != null)
+		% {
+		%   for(var i = 0; i < module.instances.length; i++) 
+		%   {
+		%      var instance = module.instances[i];
+	`instance.allocationName`_init();
+		%   }
+		% }
+	% }
+}
+
+% for (let context of raData.contexts)
+	% {
+	% module = context.modules.find(x => x.moduleName === '/driverlib/' + moduleName + '.js')
+	% if (module != null)
+	%{
+		% for(var i = 0; i < module.instances.length; i++) {
+			% var instance = module.instances[i];
+void `instance.allocationName`_init(){
+	XBAR_setInputPin(`baseAddress`, `instance.allocationName`_INPUT, `instance.allocationName`_SOURCE);
+			% if (instance.requiredArgs.inputxbarLock){
+	XBAR_lockInput(`baseAddress`, `instance.allocationName`_INPUT);
+			% }
+}
+
+		%}
+	%}
+%}
+% }
+%}

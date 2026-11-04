@@ -1,0 +1,45 @@
+//*****************************************************************************
+//
+// Function to turn on all peripherals, enabling reads and writes to the
+// peripherals' registers.
+//
+// Note that to reduce power, unused peripherals should be disabled.
+// Use function Sysctl_enablePeripheral function to selectively enable
+// peripherals. Eg: Sysctl_enablePeripheral(SYSCTL_PERIPH_CLK_CPUTIMER0)
+//
+//*****************************************************************************
+
+%%{
+let 	Common   					= system.getScript("/driverlib/Common.js");
+let 	device_driverlib_peripheral = system.getScript("/driverlib/device_driverlib_peripherals/" +
+                                        Common.getDeviceName().toLowerCase() + "_sysctl.js");
+%%}
+
+void Device_enableAllPeripherals(void)
+{
+% for (let perphEnable of device_driverlib_peripheral.SysCtl_PeripheralPCLOCKCR)
+% {
+% if (!["SYSCTL_PERIPH_CLK_GTBCLKSYNC"].includes(perphEnable.name)) {
+    SysCtl_enablePeripheral(`perphEnable.name`);
+% }
+% }
+}
+
+//*****************************************************************************
+//
+// Function to disable pin locks and enable pullups on GPIOs.
+//
+//*****************************************************************************
+void Device_initGPIO(void)
+{
+    //
+    // Disable pin locks.
+    //
+    GPIO_unlockPortConfig(GPIO_PORT_A, 0xFFFFFFFF);
+    GPIO_unlockPortConfig(GPIO_PORT_B, 0xFFFFFFFF);
+    GPIO_unlockPortConfig(GPIO_PORT_C, 0xFFFFFFFF);
+    GPIO_unlockPortConfig(GPIO_PORT_D, 0xFFFFFFFF);
+    GPIO_unlockPortConfig(GPIO_PORT_F, 0xFFFFFFFF);
+    GPIO_unlockPortConfig(GPIO_PORT_G, 0xFFFFFFFF);
+    GPIO_unlockPortConfig(GPIO_PORT_H, 0xFFFFFFFF);
+}

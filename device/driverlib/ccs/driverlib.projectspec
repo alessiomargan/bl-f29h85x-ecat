@@ -1,0 +1,18 @@
+<projectSpec>
+  <project
+        name="f29h85x_driverlib"
+        device="F29H850TU9"
+        cgtVersion="2.0.0"
+        toolChain="TICLANG"
+        launchWizard="False"
+        outputType="staticLibrary"
+        >
+    <configuration name="Debug"   compilerBuildOptions="-O1 -g -DDEBUG" archiverBuildOptions="${DRIVERLIB_ROOT}/ccs/driverlib.lib" />
+    <configuration name="Release" compilerBuildOptions="-O2 -g"         archiverBuildOptions="${DRIVERLIB_ROOT}/ccs/driverlib.lib" />
+
+    <pathVariable name="DRIVERLIB_ROOT" path="./../" scope="project" />
+
+    <file action="link"  path="${DRIVERLIB_ROOT}"    targetDirectory="." />
+
+  </project>
+</projectSpec>

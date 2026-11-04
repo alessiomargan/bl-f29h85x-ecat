@@ -1,0 +1,30 @@
+%%{
+let 	device_common   					= system.getScript("/driverlib/.meta/device/functions_c/device_common.js");
+let 	Common   						= system.getScript("/driverlib/Common.js");
+var	Include							= device_common.Include;
+var	Initialization					= device_common.Initialization;
+var	VerifyXTAL						= device_common.VerifyXTAL;
+var	Error_Handling						= device_common.Error_Handling;
+var	Boot_Cpu_2_3						= device_common.Boot_Cpu_2_3;
+var	Workaround						    = device_common.Workaround;
+
+const 	multi_core 						= device_common.multi_core;
+const 	device  						= device_common.device;
+%%}
+`Include()`
+
+#ifdef _FLASH
+#if (!defined(__CPU2__))
+    //
+    //  Dummy certificate section which is updated when actual certitifcate is generated
+    //  as part of the post build steps
+    //
+    __attribute__((retain, section("cert"))) const uint8_t certificate[4096U] = {0U};
+#endif
+#endif
+
+`Initialization()`
+`VerifyXTAL()`
+`Boot_Cpu_2_3()`
+`Workaround()`
+`Error_Handling()`

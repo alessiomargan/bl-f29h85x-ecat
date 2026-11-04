@@ -1,0 +1,57 @@
+% var moduleName = "inputxbar_input"
+% let Common   = system.getScript("/driverlib/Common.js");
+%
+% if (Common.isAllocationOff()) {
+% var module = system.modules['/driverlib/' + moduleName + '.js'];
+%if (module != null)
+%{
+//*****************************************************************************
+//
+// INPUTXBAR Configurations
+//
+//*****************************************************************************
+    % for(var i = 0; i < module.$instances.length; i++) {
+        % var instance = module.$instances[i];
+        % let modInst  = instance[moduleName];
+        % var inputs = "";
+        % var gpioName = instance.inputxbarGpio;
+        % var gpioNumber = "";
+        % if (gpioName.includes("IO")){
+            %   var aioOrGpio = (gpioName.includes("AIO"))?3:4;
+            %   gpioNumber = gpioName.substring(aioOrGpio);
+            %   gpioNumber = Common.gpioNameToNumber(gpioNumber);
+        %   } else {
+            %   gpioNumber = gpioName;
+        % }
+#define `instance.$name`_SOURCE `gpioNumber`
+#define `instance.$name`_INPUT `instance.inputxbarInput`
+void `instance.$name`_init();
+
+    % }
+%}
+%}
+%
+% else {
+//*****************************************************************************
+//
+// INPUTXBAR Configurations
+//
+//*****************************************************************************
+% let raData = system.resourceAllocation.data
+% for (let context of raData.contexts)
+	% {
+	    % module = context.modules.find(x => x.moduleName === '/driverlib/' + moduleName + '.js')
+		% if (module != null)
+		% {
+		%   for(let i = 0; i < module.instances.length; i++) 
+		%   {
+		%      let instance = module.instances[i];
+        %      let gpioNumber = Common.gpioNameToNumber(instance.requiredArgs.inputxbarGpio);
+#define `instance.allocationName`_SOURCE `gpioNumber`
+#define `instance.allocationName`_INPUT `instance.requiredArgs.inputxbarInput`
+void `instance.allocationName`_init();
+
+		%   }
+		% }
+	% }
+%}
