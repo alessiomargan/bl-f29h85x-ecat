@@ -92,6 +92,11 @@
                         <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build_vscode/CMakeFiles/CMakeScratch"/>
                         <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build_vscode/CMakeFiles/3.28.3"/>
                         <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build_vscode/CMakeFiles/Progress"/>
+                        <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build_vscode/CMakeFiles/bl-f29h85x-ecat.out.dir"/>
+                        <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build_vscode/CMakeFiles/generate_build_info.dir"/>
+                        <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build_vscode/CMakeFiles/generate_syscfg.dir"/>
+                        <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build_vscode/CMakeFiles/pkgRedirects"/>
+                        <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build_vscode/syscfg"/>
                     </sourceEntries>
                 </configuration>
             </storageModule>
@@ -114,7 +119,7 @@
                 </extensions>
             </storageModule>
             <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-                <configuration artifactExtension="out" artifactName="${ProjName}" buildProperties="" cleanCommand="${CG_CLEAN_CMD}" description="" id="com.ti.ccstudio.buildDefinitions.C2000.Default.788078109" name="FLASH" parent="com.ti.ccstudio.buildDefinitions.C2000.Default" postbuildStep="${CG_TOOL_OBJCOPY} --remove-section=cert -O binary ${ProjName}.out ${ProjName}.bin;;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 0) $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x10001000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot FLASH --img_integ no $(IF_EQUAL_CLOSE);;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 0) ${CG_TOOL_OBJCOPY} --update-section cert=C29-cert-pad.bin ${ProjName}.out ${ProjName}.out $(IF_EQUAL_CLOSE);;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 1) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/misc/$(UPDATEDUMMYCERT) $(DUMMY_CERT_FLASH) ${ProjName}.bin $(IF_EQUAL_CLOSE);;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 1) $(CONCAT) $(DUMMY_CERT_FLASH) ${ProjName}.bin &gt; ${ProjName}_cert.bin $(IF_EQUAL_CLOSE);;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 1) ${CG_TOOL_OBJCOPY} --update-section cert=$(DUMMY_CERT_FLASH) ${ProjName}.out ${ProjName}.out $(IF_EQUAL_CLOSE);" prebuildStep="${GIT_UC_TEST}/common_src/gen_build_info.sh ${GIT_UC_TEST}/common_src/soes_test">
+                <configuration artifactExtension="out" artifactName="${ProjName}" buildProperties="" cleanCommand="${CG_CLEAN_CMD}" description="" id="com.ti.ccstudio.buildDefinitions.C2000.Default.788078109" name="FLASH" parent="com.ti.ccstudio.buildDefinitions.C2000.Default" postbuildStep="${CG_TOOL_OBJCOPY} --remove-section=cert -O binary ${ProjName}.out ${ProjName}.bin;;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 0) $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x10001000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot FLASH --img_integ no $(IF_EQUAL_CLOSE);;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 0) ${CG_TOOL_OBJCOPY} --update-section cert=C29-cert-pad.bin ${ProjName}.out ${ProjName}.out $(IF_EQUAL_CLOSE);;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 1) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/misc/$(UPDATEDUMMYCERT) $(DUMMY_CERT_FLASH) ${ProjName}.bin $(IF_EQUAL_CLOSE);;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 1) $(CONCAT) $(DUMMY_CERT_FLASH) ${ProjName}.bin &gt; ${ProjName}_cert.bin $(IF_EQUAL_CLOSE);;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 1) ${CG_TOOL_OBJCOPY} --update-section cert=$(DUMMY_CERT_FLASH) ${ProjName}.out ${ProjName}.out $(IF_EQUAL_CLOSE);" prebuildStep="python3 &quot;${PROJECT_ROOT}/tools/check_foe_stack.py&quot; &amp;&amp; ${PROJECT_ROOT}/tools/gen_build_info.sh  ${PROJECT_ROOT}/src">
                     <folderInfo id="com.ti.ccstudio.buildDefinitions.C2000.Default.788078109." name="/" resourcePath="">
                         <toolChain id="com.ti.ccstudio.buildDefinitions.C2000_TICLANG_2.1.exe.DebugToolchain.1506022065" name="TI Build Tools" superClass="com.ti.ccstudio.buildDefinitions.C2000_TICLANG_2.1.exe.DebugToolchain" targetTool="com.ti.ccstudio.buildDefinitions.C2000_TICLANG_2.1.exe.linkerDebug.539062282">
                             <option id="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS.315312367" superClass="com.ti.ccstudio.buildDefinitions.core.OPT_TAGS" valueType="stringList">
@@ -136,8 +141,11 @@
                                 <option id="com.ti.ccstudio.buildDefinitions.C2000_TICLANG_2.1.compilerID.INCLUDE_PATH.881703111" superClass="com.ti.ccstudio.buildDefinitions.C2000_TICLANG_2.1.compilerID.INCLUDE_PATH" valueType="includePath">
                                     <listOptionValue value="${SYSCONFIG_TOOL_INCLUDE_PATH}"/>
                                     <listOptionValue value="${COM_TI_F29H85X_SDK_INCLUDE_PATH}"/>
-                                    <listOptionValue value="${PROJECT_ROOT}"/>
                                     <listOptionValue value="${CG_TOOL_INCLUDE_PATH}"/>
+                                    <listOptionValue value="${PROJECT_ROOT}"/>
+                                    <listOptionValue value="${PROJECT_ROOT}/src"/>
+                                    <listOptionValue value="${PROJECT_ROOT}/external/SOES"/>
+                                    <listOptionValue value="${PROJECT_ROOT}/external/SOES/soes/include/sys/clang"/>
                                 </option>
                                 <option id="com.ti.ccstudio.buildDefinitions.C2000_TICLANG_2.1.compilerID.DEFINE.1281132621" superClass="com.ti.ccstudio.buildDefinitions.C2000_TICLANG_2.1.compilerID.DEFINE" valueType="definedSymbols">
                                     <listOptionValue value="${SYSCONFIG_TOOL_SYMBOLS}"/>
@@ -185,9 +193,8 @@
                         </toolChain>
                     </folderInfo>
                     <sourceEntries>
-                        <entry excluding="build_vscode|build|f29h85x_ram_lnk.cmd|device/driverlib" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+                        <entry excluding="external/SOES/soes/hal/advr_esc/esc_hw_et1100.c|external/SOES/soes/hal/advr_esc/esc_hw_f28p65x.c|external/SOES/soes/hal/advr_esc/esc_hw_lan9252_hbi.c|external/SOES/soes/hal/advr_esc/esc_hw_lan9252_spi.c|external/SOES/soes/hal/advr_esc/esc_hw_lan9252.c|external/SOES/soes/hal/advr_esc/hal_ec_mbed.cpp|external/SOES/soes/hal/advr_esc/hal_ec_STM32F4xx.c|external/SOES/soes/hal/advr_esc/hal_ec_tiF28M36.c|external/SOES/soes/hal/advr_esc/hal_ec_tiM4.c|external/SOES/soes/hal/advr_esc/hal_ec_tiMSP432.c|external/SOES/soes/hal/advr_esc/soes.c|external/SOES/soes/hal/raspberrypi-lan9252|external/SOES/soes/hal/rt-kernel-lan9252|external/SOES/soes/hal/rt-kernel-twrk60|external/SOES/soes/hal/rt-kernel-xmc4|external/SOES/soes/hal/tiesc|external/SOES/soes/hal/xmc4|external/SOES/soes/hal/linux-lan9252|external/SOES/drivers|external/SOES/cmake|external/SOES/applications|build_vscode|build|f29h85x_ram_lnk.cmd|device/driverlib" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
                         <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build_vscode/CMakeFiles/CMakeScratch"/>
-                        <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build_vscode/CMakeFiles/3.28.3"/>
                         <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build/CMakeFiles/3.28.3"/>
                         <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build/CMakeFiles/CMakeScratch"/>
                         <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build/CMakeFiles/Progress"/>
@@ -196,7 +203,13 @@
                         <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build/CMakeFiles/generate_syscfg.dir"/>
                         <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build/CMakeFiles/pkgRedirects"/>
                         <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build/syscfg"/>
+                        <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build_vscode/CMakeFiles/3.28.3"/>
                         <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build_vscode/CMakeFiles/Progress"/>
+                        <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build_vscode/CMakeFiles/bl-f29h85x-ecat.out.dir"/>
+                        <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build_vscode/CMakeFiles/generate_build_info.dir"/>
+                        <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build_vscode/CMakeFiles/generate_syscfg.dir"/>
+                        <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build_vscode/CMakeFiles/pkgRedirects"/>
+                        <entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="build_vscode/syscfg"/>
                     </sourceEntries>
                 </configuration>
             </storageModule>

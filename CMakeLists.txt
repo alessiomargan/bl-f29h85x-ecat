@@ -87,10 +87,6 @@ option(USE_DUMMY_CERT "Use dummy certificate post-build flow" ON)
 set(TARGET_CONFIG "FLASH" CACHE STRING "Target memory configuration")
 set_property(CACHE TARGET_CONFIG PROPERTY STRINGS FLASH RAM)
 
-# External workspace paths mirrored from CCS project variables.
-set(GIT_SOES_ROOT "/home/amargan/work/code/firmware/SOES" CACHE PATH "Path to SOES repository")
-set(GIT_UC_TEST_ROOT "/home/amargan/work/code/firmware/uc_test" CACHE PATH "Path to uc_test repository")
-
 find_program(HOST_PYTHON NAMES python3 python)
 
 set(FLASH_LOAD_ADDR "0x10001000" CACHE STRING "FLASH boot load address")
@@ -134,41 +130,26 @@ endif()
 
 # Root project source files
 set(PROJECT_SOURCES
-    main.c
-    boot_f29h85x.c
-    boot_image.c
-    ethercat_subdevice_cpu1_hal.c
-    flash_utils.c
-    foe_utils.c
+    "src/main.c"
+    "src/boot_f29h85x.c"
+    "src/boot_image.c"
+    "src/ethercat_subdevice_cpu1_hal.c"
+    "src/flash_utils.c"
+    "src/foe_utils.c"
+    "src/globals.c"
+    "src/soes_hook.c"
+    "src/objectlist.c"
     "${MCU_SDK_ROOT}/examples/device_support/source/codestartbranch.asm"
 )
 
 # Linked CCS project files that live outside this repository.
-set(SOES_SOURCES)
-set(SOES_TEST_SOURCES)
-
-if(EXISTS "${GIT_SOES_ROOT}/soes/ecat_slv.c")
-    list(APPEND SOES_SOURCES
-        "${GIT_SOES_ROOT}/soes/ecat_slv.c"
-        "${GIT_SOES_ROOT}/soes/esc.c"
-        "${GIT_SOES_ROOT}/soes/esc_coe.c"
-        "${GIT_SOES_ROOT}/soes/esc_foe.c"
-        "${GIT_SOES_ROOT}/soes/hal/advr_esc/esc_hw_f29x.c"
-    )
-else()
-    message(WARNING "SOES sources not found under GIT_SOES_ROOT='${GIT_SOES_ROOT}'. Build will exclude linked CCS SOES files.")
-endif()
-
-if(EXISTS "${GIT_UC_TEST_ROOT}/common_src/soes_test/globals.c")
-    list(APPEND SOES_TEST_SOURCES
-        "${GIT_UC_TEST_ROOT}/common_src/soes_test/globals.c"
-        "${GIT_UC_TEST_ROOT}/common_src/soes_test/objectlist.c"
-        "${GIT_UC_TEST_ROOT}/common_src/soes_test/params.c"
-        "${GIT_UC_TEST_ROOT}/common_src/soes_test/soes_hook.c"
-    )
-else()
-    message(WARNING "soes_test sources not found under GIT_UC_TEST_ROOT='${GIT_UC_TEST_ROOT}'.")
-endif()
+set(SOES_SOURCES
+    "external/SOES/soes/ecat_slv.c"
+    "external/SOES/soes/esc.c"
+    "external/SOES/soes/esc_coe.c"
+    "external/SOES/soes/esc_foe.c"
+    "external/SOES/soes/hal/advr_esc/esc_hw_f29x.c"
+)
 
 # CCS excludes device/driverlib sources and links prebuilt driverlib.lib.
 set(DEVICE_SOURCES)
@@ -191,7 +172,6 @@ endif()
 set(ALL_SOURCES 
     ${PROJECT_SOURCES}
     ${SOES_SOURCES}
-    ${SOES_TEST_SOURCES}
     ${DEVICE_SOURCES}
     ${SYSCFG_SOURCES}
 )
@@ -205,6 +185,9 @@ set(PROJECT_INCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}/device
     ${CMAKE_CURRENT_SOURCE_DIR}/device/driverlib/inc
     ${CMAKE_CURRENT_SOURCE_DIR}/device/driverlib/ccs
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/SOES
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/SOES/soes/include/sys/clang
     ${MCU_SDK_ROOT}/source
     ${MCU_SDK_ROOT}/source/security
     ${MCU_SDK_ROOT}/source/driverlib
@@ -231,9 +214,6 @@ set(PROJECT_INCLUDE_DIRS
     ${MCU_SDK_ROOT}/source/pmic
     ${MCU_SDK_ROOT}/source/sdl
     ${TI_CLANG_ROOT}/include
-    ${GIT_SOES_ROOT}
-    ${GIT_SOES_ROOT}/soes/include/sys/clang
-    ${GIT_UC_TEST_ROOT}/common_src/soes_test/include
 )
 
 if(USE_SYSCFG)
@@ -386,8 +366,8 @@ if(USE_SYSCFG)
 endif()
 
 # Keep the CCS pre-build metadata generation behavior when the script exists.
-set(BUILD_INFO_SCRIPT "${GIT_UC_TEST_ROOT}/common_src/gen_build_info.sh")
-set(BUILD_INFO_TARGET_DIR "${GIT_UC_TEST_ROOT}/common_src/soes_test")
+set(BUILD_INFO_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/tools/gen_build_info.sh")
+set(BUILD_INFO_TARGET_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 set(BUILD_INFO_HEADER "${BUILD_INFO_TARGET_DIR}/include/build_info.h")
 
 if(EXISTS "${BUILD_INFO_SCRIPT}")
