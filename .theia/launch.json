@@ -2,39 +2,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "f29h85x_cpu1_soes",
-            "type": "ccs-debug",
-            "request": "launch",
-            "projectInfo": {
-                "name": "f29h85x_cpu1_soes",
-                "resourceId": "/f29h85x_cpu1_soes"
-            },
-            "connections": [
-                {
-                    "name": "Texas Instruments XDS110 USB Debug Probe",
-                    "cores": [
-                        {
-                            "name": "C29xx_CPU1",
-                            "debuggerSettings": {
-                                "data": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n<PropertyValues>\n\n  <property id=\"AddCIOBreakpointAfterLoad\">\n    <curValue>0</curValue>\n  </property>\n\n  <property id=\"FlashNonMainBankModeBANKMGMT\">\n    <curValue>2</curValue>\n  </property>\n\n  <property id=\"FlashFiles\">\n    <curValue></curValue>\n  </property>\n\n</PropertyValues>\n"
-                            }
-                        }
-                    ]
-                }
-            ],
-            "launchSettings": {
-                "coresToLoadForProjectLaunch": [
-                    "C29xx_CPU1"
-                ]
-            }
-        },
-        {
-            "name": "F29H850TU9.ccxml",
-            "type": "ccs-debug",
-            "request": "launch",
-            "targetConfig": "${workspaceFolder}/targetConfigs/F29H850TU9.ccxml"
-        },
-        {
             "name": "bl-f29h85x-ecat",
             "type": "ccs-debug",
             "request": "launch",
@@ -55,6 +22,12 @@
                     ]
                 }
             ]
+        },
+        {
+            "name": "F29H850TU9.ccxml",
+            "type": "ccs-debug",
+            "request": "launch",
+            "targetConfig": "${workspaceFolder}/targetConfigs/F29H850TU9.ccxml"
         }
     ]
 }

@@ -21,7 +21,7 @@ class BootImage(unittest.TestCase):
         cls.library = Path(cls.tmp.name) / "boot_image.so"
         subprocess.run([
             "cc", "-std=c99", "-Wall", "-Wextra", "-Werror", "-fPIC", "-shared",
-            "-I" + str(ROOT), str(ROOT / "boot_image.c"),
+            "-I" + str(ROOT / "src"), str(ROOT / "src/boot_image.c"),
             str(ROOT / "tests/boot_image_harness.c"), "-o", str(cls.library)
         ], check=True)
         cls.lib = C.CDLL(str(cls.library))
@@ -39,6 +39,7 @@ class BootImage(unittest.TestCase):
         self.assertEqual(self.lib.test_load(data, len(IMAGE)), 1)
 
     def test_packer_and_validator_agree(self):
+        self.assertEqual(len(IMAGE), len(PAYLOAD) + PACKER.MANIFEST_SIZE)
         self.load()
         self.assertEqual(self.lib.test_valid(0), 1)
         self.assertEqual(self.lib.test_valid(1), 0)

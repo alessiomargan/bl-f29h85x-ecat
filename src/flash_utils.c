@@ -10,20 +10,23 @@ void Enable_interrupt(void)  { EINT; }
 static uint32_t user_flash_config;
 static bool flash_api_configured;
 
-static bool range_inside(uint32_t address, uint32_t size,
-                         uint32_t begin, uint32_t end_plus_one)
+static inline __attribute__((always_inline))
+bool range_inside(uint32_t address, uint32_t size,
+                  uint32_t begin, uint32_t end_plus_one)
 {
     return size != 0U && address >= begin && address < end_plus_one &&
            size <= end_plus_one - address;
 }
 
-static bool is_application_range(uint32_t address, uint32_t size)
+static inline __attribute__((always_inline))
+bool is_application_range(uint32_t address, uint32_t size)
 {
     return range_inside(address, size, BOOT_APP_ADDR,
                         BOOT_APP_ADDR + BOOT_SLOT_OCTETS);
 }
 
-static bool is_data_range(uint32_t address, uint32_t size)
+static inline __attribute__((always_inline))
+bool is_data_range(uint32_t address, uint32_t size)
 {
     return range_inside(address, size, C29FLASHBANKFR4RP0STARTADDRESS,
                         C29FLASHBANKFR4RP0ENDADDRESSPLUS1);

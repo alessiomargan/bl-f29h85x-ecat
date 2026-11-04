@@ -45,10 +45,16 @@ void test_reset(void)
 
 int test_load(const uint8_t *image, uint32_t count)
 {
-    if (count != BOOT_WIRE_OCTETS) {
+    uint32_t payload_octets;
+
+    if (count < BOOT_MANIFEST_OCTETS ||
+        !boot_manifest_decode(image, &payload_octets) ||
+        count != BOOT_MANIFEST_OCTETS + payload_octets) {
         return 0;
     }
-    memcpy(flash_image, image, count);
+    memcpy(flash_image, image + BOOT_MANIFEST_OCTETS, payload_octets);
+    memcpy(&flash_image[BOOT_MANIFEST_ADDR - BOOT_APP_ADDR], image,
+           BOOT_MANIFEST_OCTETS);
     return 1;
 }
 

@@ -1,9 +1,12 @@
 # ccs configuration build dir
 RAM/
 FLASH/
+BLDR_CC/
 LAUNCHXL_FLASH/
 CC_BLDR/
 LP_BLDR/
+build/
+build_vscode/
 
 .settings/
 
@@ -18,4 +21,3 @@ LP_BLDR/
 
 !FAPI_F28P65x_EABI_v3.00.02.lib
 !driverlib.lib
-
